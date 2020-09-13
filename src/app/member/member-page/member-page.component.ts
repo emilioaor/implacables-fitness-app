@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-member-page',
@@ -21,12 +22,35 @@ export class MemberPageComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) { }
+  constructor(
+      private router: Router,
+      private alertController: AlertController
+  ) { }
 
   ngOnInit() {}
 
-  logout() {
-    this.router.navigate(['/login']);
+  async logout() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Logout!',
+      message: 'Are you sure?',
+      buttons: [
+        {
+          text: 'NO',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+          }
+        }, {
+          text: 'YES',
+          handler: () => {
+            this.router.navigate(['/login']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

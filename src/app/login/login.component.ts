@@ -29,7 +29,14 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
 
     if (this.form.valid) {
-      this.router.navigate(['/member/dashboard']);
+      this.loading = true;
+
+      window.setTimeout(() => {
+        this.loading = false;
+        this.form.get('email').setValue('');
+        this.form.get('password').setValue('');
+        this.router.navigate(['/member/dashboard']);
+      }, 2000);
     }
   }
 }

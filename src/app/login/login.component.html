@@ -1,7 +1,9 @@
 <ion-content>
+  <div class="loading" *ngIf="loading">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
   <section>
     <h1>Casual Fitness</h1>
-
     <div class="card">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
