@@ -1,5 +1,10 @@
 {
-  "name": "Product Billboard",
-  "integrations": {},
+  "name": "Casual Fitness",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {
+      "enabled": false
+    }
+  },
   "type": "angular"
 }

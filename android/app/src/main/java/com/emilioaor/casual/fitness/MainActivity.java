@@ -1,4 +1,4 @@
-package com.emilioaor.product.billboard;
+package com.emilioaor.casual.fitness;
 
 import android.os.Bundle;
 

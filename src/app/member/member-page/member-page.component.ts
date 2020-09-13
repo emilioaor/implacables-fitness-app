@@ -11,18 +11,13 @@ export class MemberPageComponent implements OnInit {
   public appPages = [
     {
       title: 'Dashboard',
-      url: '/folder/Inbox',
+      url: '/member/dashboard',
       icon: 'fitness'
     },
     {
       title: 'Classes',
-      url: '/folder/Outbox',
+      url: '/member/classes',
       icon: 'list'
-    },
-    {
-      title: 'Profile',
-      url: '/folder/Favorites',
-      icon: 'lock-closed'
     }
   ];
 
