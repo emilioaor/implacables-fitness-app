@@ -45,6 +45,11 @@ export class AppComponent implements OnInit {
   }
 
   handleNotifications() {
+
+    if (location.host === 'localhost:8100') {
+      return false;
+    }
+
     this.pushNotifications.requestPermission().then( result => {
       if (result.granted) {
         // Register with Apple / Google to receive push via APNS/FCM
