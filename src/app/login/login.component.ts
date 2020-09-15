@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
 
       window.setTimeout(() => {
         this.loading = false;
+        this.submitted = false;
         this.form.get('email').setValue('');
         this.form.get('password').setValue('');
         this.router.navigate(['/member/dashboard']);

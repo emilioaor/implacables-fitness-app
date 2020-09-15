@@ -12,6 +12,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from './login/login.component';
 import {MemberPageComponent} from './member/member-page/member-page.component';
 import {MemberDashboardComponent} from './member/member-dashboard/member-dashboard.component';
+import {MemberClassesComponent} from './member/member-classes/member-classes.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {MemberDashboardComponent} from './member/member-dashboard/member-dashboa
       AppComponent,
       LoginComponent,
       MemberPageComponent,
-      MemberDashboardComponent
+      MemberDashboardComponent,
+      MemberClassesComponent
   ],
   entryComponents: [],
   imports: [
