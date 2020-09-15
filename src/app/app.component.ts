@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {PushNotificationService} from './services/push-notification.service';
+import {BackService} from './services/back.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private pushNotificationService: PushNotificationService
+    private pushNotificationService: PushNotificationService,
+    private backService: BackService
   ) {
     this.initializeApp();
   }
@@ -26,6 +28,7 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.pushNotificationService.handleNotifications();
+      this.backService.subscribeBackButton();
     });
   }
 
