@@ -1,6 +1,6 @@
 {
   "appId": "com.emilioaor.implacables.fitness",
-  "appName": "Casual Fitness",
+  "appName": "Implacables Fitness",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

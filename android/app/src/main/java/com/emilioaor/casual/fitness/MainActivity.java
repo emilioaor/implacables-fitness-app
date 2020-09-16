@@ -1,4 +1,4 @@
-package com.emilioaor.implacables.fitness;
+package com.emilioaor.casual.fitness;
 
 import android.os.Bundle;
 
