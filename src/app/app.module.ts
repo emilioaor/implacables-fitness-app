@@ -13,6 +13,9 @@ import {LoginComponent} from './login/login.component';
 import {MemberPageComponent} from './member/member-page/member-page.component';
 import {MemberDashboardComponent} from './member/member-dashboard/member-dashboard.component';
 import {MemberClassesComponent} from './member/member-classes/member-classes.component';
+import {HttpClientModule} from '@angular/common/http';
+import {ApiService} from "./services/api.service";
+import {LoginService} from "./services/login.service";
 
 
 @NgModule({
@@ -29,11 +32,14 @@ import {MemberClassesComponent} from './member/member-classes/member-classes.com
     IonicModule.forRoot(),
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    ApiService,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

@@ -16,12 +16,15 @@
           </label>
           <input
                   class="input"
-                  [class]="{'input-error': submitted && form.get('email').invalid}"
+                  [class]="{'input-error': (submitted && form.get('email').invalid) || authError}"
                   type="text"
                   formControlName="email"
           >
           <div class="error" *ngIf="submitted && form.get('email').invalid && form.get('email').errors.required">
             Required
+          </div>
+          <div class="error" *ngIf="authError">
+            Invalid credentials
           </div>
         </div>
 
@@ -32,12 +35,15 @@
           </label>
           <input
                   class="input"
-                  [class]="{'input-error': submitted && form.get('password').invalid}"
+                  [class]="{'input-error': (submitted && form.get('password').invalid) || authError}"
                   type="password"
                   formControlName="password"
           >
           <div class="error" *ngIf="submitted && form.get('password').invalid && form.get('password').errors.required">
             Required
+          </div>
+          <div class="error" *ngIf="authError">
+            Invalid credentials
           </div>
         </div>
 

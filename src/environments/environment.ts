@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://www.gym.local',
+  token: 'U1cxd2JHRmpZV0pzWlhOZlJtbDBibVZ6YzE5VWIydGxibDlsYldsc2FXOWhiM0pmYzJWamRYSnBkSGs9'
 };
 
 /*
