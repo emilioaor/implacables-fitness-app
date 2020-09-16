@@ -2,17 +2,34 @@ section {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #343a40;
+  background-color: #c4c4c4;
   justify-content: center;
   align-items: center;
   padding: 20px;
 
+  .logo {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    img {
+      background-color: rgba(255,255,255, .8);
+      border-radius: 50%;
+      padding: 10px;
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+
   .card {
     width: 100%;
     max-width: 500px;
-    background-color: #ffffff;
-    padding: 20px;
+    background-color: var(--gym-color-primary);
+    padding: 0 20px 20px;
     border-radius: 5px;
+
+    .label {
+      color: #ffffff;
+    }
 
     button {
       background-color: var(--ion-color-success);
@@ -27,7 +44,7 @@ section {
   }
 
   h1 {
-    color: #ffffff;
+    color: var(--gym-color-primary);
     text-align: center;
     font-size: 30px;
   }
