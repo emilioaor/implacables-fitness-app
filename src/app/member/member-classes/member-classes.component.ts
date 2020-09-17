@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {StorageService} from '../../services/storage.service';
+import {MemberService} from '../../services/member.service';
+import {User} from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-member-classes',
@@ -7,16 +10,70 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MemberClassesComponent implements OnInit {
 
-  constructor() { }
+  classesGroup = [];
+  loading = true;
+  user: User;
 
-  ngOnInit() {}
+  constructor(
+      private storageService: StorageService,
+      private memberService: MemberService
+  ) { }
+
+  ngOnInit() {
+    this.storageService.getUser().then(user => {
+      this.user = user;
+      this.getClassToday();
+    });
+  }
+
+  getClassToday() {
+    this.memberService.classToday(this.user).subscribe((res: any) => {
+      if (res.success) {
+        this.buildClasses(res.data.classes);
+      }
+      this.loading = false;
+    }, err => {
+      console.log(err);
+      this.loading = false;
+    });
+  }
+
+  buildClasses(classes) {
+    let last = '';
+    let temp = [];
+
+    classes.forEach(c => {
+      if (c.date_f !== last) {
+        if (last !== '') {
+          this.classesGroup.push({
+            date: last,
+            classes: temp
+          });
+        }
+
+        last = c.date_f;
+        temp = [];
+      }
+
+      temp.push(c);
+    });
+
+    this.classesGroup.push({
+      date: last,
+      classes: temp
+    });
+  }
 
   doRefresh(event) {
-    console.log('Begin async operation');
-
-    setTimeout(() => {
-      console.log('Async operation has ended');
+    this.classesGroup = [];
+    this.memberService.classToday(this.user).subscribe((res: any) => {
+      if (res.success) {
+        this.buildClasses(res.data.classes);
+      }
       event.target.complete();
-    }, 2000);
+    }, err => {
+      console.log(err);
+      event.target.complete();
+    });
   }
 }
