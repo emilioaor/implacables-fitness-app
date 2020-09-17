@@ -1,29 +1,29 @@
-<section class="container">
+<section class="container" *ngIf="user">
   <div class="cards">
     <div>
       <div class="card primary">
-        <strong>Anual</strong><br>
+        <strong>{{ user.member.plan_name }}</strong><br>
         <small>Plan</small>
       </div>
     </div>
 
     <div>
       <div class="card warning">
-        <strong>2020-08-20</strong><br>
+        <strong>{{ user.member.member_birthday_date }}</strong><br>
         <small>Birthday</small>
       </div>
     </div>
 
     <div>
       <div class="card success">
-        <strong>2020-08-20</strong><br>
+        <strong>{{ user.member.member_payment_date }}</strong><br>
         <small>Payment Date</small>
       </div>
     </div>
 
     <div>
       <div class="card danger">
-        <strong>2020-08-20</strong><br>
+        <strong>{{ user.member.member_exp_date }}</strong><br>
         <small>Expiration Date</small>
       </div>
     </div>
@@ -32,7 +32,7 @@
   <div class="time">
     <p>
       Time to next class:
-      <span>00:40:35</span>
+      <span>{{ h >= 10 ? h : '0' + h }}:{{ i >= 10 ? i : '0' + i }}:{{ s >= 10 ? s : '0' + s }}</span>
     </p>
   </div>
 
@@ -44,7 +44,7 @@
             <strong>
               Name:
             </strong><br>
-            Emilio Ochoa
+            {{ user.member.member_name }}
           </p>
         </div>
 
@@ -53,7 +53,7 @@
             <strong>
               Contact:
             </strong><br>
-            04127833949
+            {{ user.member.member_contact }}
           </p>
         </div>
 
@@ -62,7 +62,7 @@
             <strong>
               Age:
             </strong><br>
-            27
+            {{ user.member.member_age }}
           </p>
         </div>
 
@@ -71,7 +71,7 @@
             <strong>
               Sex:
             </strong><br>
-            male
+            {{ user.member.member_sex }}
           </p>
         </div>
 
@@ -80,7 +80,7 @@
             <strong>
               Date Joined:
             </strong><br>
-            2020-08-20
+            {{ user.member.member_join_date }}
           </p>
         </div>
 
@@ -89,7 +89,7 @@
             <strong>
               Email:
             </strong><br>
-            emilioaor@gmail.com
+            {{ user.member.member_email }}
           </p>
         </div>
 
@@ -98,7 +98,7 @@
             <strong>
               Height:
             </strong><br>
-            1.74
+            {{ user.member.member_height }}
           </p>
         </div>
 
@@ -107,7 +107,7 @@
             <strong>
               Weight:
             </strong><br>
-            87
+            {{ user.member.member_weight }}
           </p>
         </div>
 

@@ -20,7 +20,7 @@ export interface Member {
   member_paid_amount: number;
   member_payable_amount: number;
   member_notes: string;
-  member_birth_date: string;
+  member_birthday_date: string;
   plan_id: string;
   plan_name: string;
   plan_details: string;
