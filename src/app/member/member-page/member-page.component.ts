@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-member-page',
@@ -24,7 +25,8 @@ export class MemberPageComponent implements OnInit {
 
   constructor(
       private router: Router,
-      private alertController: AlertController
+      private alertController: AlertController,
+      private storageService: StorageService
   ) { }
 
   ngOnInit() {}
@@ -44,6 +46,7 @@ export class MemberPageComponent implements OnInit {
         }, {
           text: 'YES',
           handler: () => {
+            this.storageService.logout();
             this.router.navigate(['/login']);
           }
         }

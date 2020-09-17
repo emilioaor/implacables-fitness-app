@@ -11,4 +11,8 @@ export class LoginService {
   login(useremail: string, userpassword: string) {
     return this.apiService.post('login_user', {useremail, userpassword});
   }
+
+  refreshLogin(userId) {
+    return this.apiService.post('refresh_login', {user_id: userId});
+  }
 }

@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {LoginService} from '../services/login.service';
 import {Subscription} from 'rxjs/index';
+import {StorageService} from '../services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import {Subscription} from 'rxjs/index';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  loading = false;
+  loading = true;
   form: FormGroup;
   submitted = false;
   authError = false;
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
       private fb: FormBuilder,
       private router: Router,
-      private loginService: LoginService
+      private loginService: LoginService,
+      private storageService: StorageService
   ) { }
 
   ngOnInit() {
@@ -30,6 +32,27 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     this.subscription = this.form.valueChanges.subscribe(res => this.authError = false);
+
+    this.storageService.getUser().then(user => {
+      if (user) {
+
+        this.loginService.refreshLogin(user.id).subscribe((res: any) => {
+
+          if (res.success) {
+            this.storageService.setUser(res.data);
+            this.setDefaultValues();
+            this.router.navigate(['/member/dashboard']);
+          } else {
+            this.storageService.logout();
+            this.loading = false;
+          }
+
+        });
+      } else {
+        this.loading = false;
+      }
+    });
+
   }
 
   ngOnDestroy() {
@@ -43,16 +66,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.form.valid && ! this.loading) {
       this.loading = true;
 
-      this.loginService.login(this.form.get('email').value, this.form.get('password').value).subscribe(res => {
+      this.loginService.login(this.form.get('email').value, this.form.get('password').value).subscribe((res: any) => {
 
         if (res.success) {
 
-          window.setTimeout(() => {
-            this.loading = false;
-            this.form.get('email').setValue('');
-            this.form.get('password').setValue('');
-            this.submitted = false;
-          }, 2000);
+          this.storageService.setUser(res.data);
+
+          this.setDefaultValues();
           this.router.navigate(['/member/dashboard']);
 
         } else {
@@ -66,5 +86,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.authError = true;
       });
     }
+  }
+
+  setDefaultValues() {
+    window.setTimeout(() => {
+      this.loading = false;
+      this.form.get('email').setValue('');
+      this.form.get('password').setValue('');
+      this.submitted = false;
+    }, 2000);
   }
 }

@@ -1,0 +1,29 @@
+export interface Member {
+  member_id: number;
+  invoice_id: string;
+  member_reg_id: number;
+  member_img: string;
+  member_name: string;
+  member_email: string;
+  member_proof: string;
+  member_age: number;
+  member_sex: string;
+  member_address: string;
+  member_contact: string;
+  member_height: number;
+  member_weight: number;
+  member_plan_id: number;
+  member_join_date: string;
+  member_payment_date: string;
+  member_exp_date: string;
+  plan_total_amount: number;
+  member_paid_amount: number;
+  member_payable_amount: number;
+  member_notes: string;
+  member_birth_date: string;
+  plan_id: string;
+  plan_name: string;
+  plan_details: string;
+  plan_days: number;
+  plan_rate: number;
+}
