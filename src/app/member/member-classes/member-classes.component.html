@@ -5,7 +5,7 @@
   <div class="loading" *ngIf="loading">
     <ion-spinner color="primary"></ion-spinner>
   </div>
-  <section class="member_classes_list" *ngIf="! loading">
+  <section class="member_classes_list" *ngIf="classesGroup">
     <ion-list id="classes-list">
       <ion-list-header>
         <h3>
