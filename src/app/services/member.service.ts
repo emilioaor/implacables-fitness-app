@@ -16,4 +16,12 @@ export class MemberService {
   classToday(user: User) {
     return this.apiService.post('class_today', {user});
   }
+
+  subscribeClass(classId: number, date: string, user: User) {
+    return this.apiService.post('subscribe_class', {class_id: classId, date, user});
+  }
+
+  unsubscribeByDate(date: string, user: User) {
+    return this.apiService.post('unsubscribe_by_date', {date, user});
+  }
 }

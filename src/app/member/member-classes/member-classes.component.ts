@@ -11,6 +11,12 @@ import {User} from '../../interfaces/user.interface';
 export class MemberClassesComponent implements OnInit {
 
   classesGroup = [];
+  serverInfo = {
+    date: '',
+    time: '',
+    oneHourBefore: '',
+    subscribed_dates: []
+  };
   loading = true;
   user: User;
 
@@ -27,15 +33,25 @@ export class MemberClassesComponent implements OnInit {
   }
 
   getClassToday() {
+    this.classesGroup = [];
+
     this.memberService.classToday(this.user).subscribe((res: any) => {
       if (res.success) {
-        this.buildClasses(res.data.classes);
+        this.buildData(res.data);
       }
       this.loading = false;
     }, err => {
       console.log(err);
       this.loading = false;
     });
+  }
+
+  buildData(data) {
+    this.serverInfo.date = data.date;
+    this.serverInfo.time = data.time;
+    this.serverInfo.oneHourBefore = data.oneHourBefore;
+    this.serverInfo.subscribed_dates = data.subscribed_dates;
+    this.buildClasses(data.classes);
   }
 
   buildClasses(classes) {
@@ -68,12 +84,34 @@ export class MemberClassesComponent implements OnInit {
     this.classesGroup = [];
     this.memberService.classToday(this.user).subscribe((res: any) => {
       if (res.success) {
-        this.buildClasses(res.data.classes);
+        this.buildData(res.data);
       }
       event.target.complete();
     }, err => {
       console.log(err);
       event.target.complete();
     });
+  }
+
+  subscribe(classSelected) {
+    this.loading = true;
+
+    if (classSelected.subscribed === '0') {
+      // Subscribe
+
+      this.memberService.subscribeClass(classSelected.id, classSelected.date, this.user).subscribe((res: any) => {
+        if (! res.success) {
+        }
+        this.getClassToday();
+      });
+
+    } else {
+      // Unsubscribe
+      this.memberService.unsubscribeByDate(classSelected.date, this.user).subscribe((res: any) => {
+        if (! res.success) {
+        }
+        this.getClassToday();
+      });
+    }
   }
 }

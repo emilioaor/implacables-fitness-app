@@ -42,11 +42,19 @@
         width: 34%;
         text-align: center;
         span {
-          background-color: var(--ion-color-success);
           color: var(--ion-color-success-contrast);
           padding: 3px;
           font-weight: bold;
           border-radius: 2px;
+        }
+        .completed {
+          background-color: var(--ion-color-success);
+        }
+        .in-process {
+          background-color: var(--ion-color-primary);
+        }
+        .pending {
+          background-color: var(--ion-color-warning);
         }
       }
 

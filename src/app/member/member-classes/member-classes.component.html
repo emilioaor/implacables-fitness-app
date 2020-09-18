@@ -25,13 +25,36 @@
               {{ class.time }}
             </div>
             <div class="status">
-              <span>In process</span>
+              <span class="completed" *ngIf="serverInfo.date === class.date && serverInfo.time > class.time;">Complete</span>
+              <span class="in-process" *ngIf="serverInfo.date === class.date && serverInfo.time === class.time;">In process</span>
+              <span class="pending" *ngIf="serverInfo.date < class.date || (serverInfo.date === class.date && serverInfo.time < class.time)">Pending</span>
             </div>
             <div class="subscribers">
               {{ class.count_subscribers }} / 8
             </div>
             <div class="choose">
-              <ion-toggle color="primary" [checked]="class.subscribed === '1' ? true : false" [disabled]="false"></ion-toggle>
+              <div *ngIf="class.subscribed === '1'">
+                <ion-badge color="success" *ngIf="serverInfo.date === class.date && serverInfo.time >= class.time">ME</ion-badge>
+                <ion-toggle
+                        color="primary"
+                        *ngIf="! (serverInfo.date === class.date && serverInfo.time >= class.time)"
+                        (ionChange)="subscribe(class)"
+                        [checked]="class.subscribed === '1' ? true : false"
+                        [disabled]="serverInfo.date === class.date && serverInfo.time >= class.time"
+                ></ion-toggle>
+              </div>
+              <div *ngIf="class.subscribed === '0'">
+                <ion-toggle
+                        color="primary"
+                        (ionChange)="subscribe(class)"
+                        [checked]="class.subscribed === '1' ? true : false"
+                        [disabled]="
+                          (serverInfo.date === class.date && serverInfo.time >= class.time) ||
+                          class.count_subscribers >= 8 ||
+                          serverInfo.subscribed_dates.indexOf(class.date) >= 0
+                        "
+                ></ion-toggle>
+              </div>
             </div>
           </div>
         </ion-item>
