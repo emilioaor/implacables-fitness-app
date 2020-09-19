@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import {LoginService} from '../services/login.service';
 import {Subscription} from 'rxjs/index';
 import {StorageService} from '../services/storage.service';
+import {PushNotificationService} from '../services/push-notification.service';
+import {ToastService} from '../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       private fb: FormBuilder,
       private router: Router,
       private loginService: LoginService,
-      private storageService: StorageService
+      private storageService: StorageService,
+      private pushNotificationService: PushNotificationService,
+      private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -41,12 +45,17 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (res.success) {
             this.storageService.setUser(res.data);
             this.setDefaultValues();
+            this.handleNotifications();
             this.router.navigate(['/member/dashboard']);
           } else {
             this.storageService.logout();
             this.loading = false;
           }
 
+        }, err => {
+          this.storageService.logout();
+          this.loading = false;
+          this.toastService.connectionFailed();
         });
       } else {
         this.loading = false;
@@ -73,6 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.storageService.setUser(res.data);
 
           this.setDefaultValues();
+          this.handleNotifications();
           this.router.navigate(['/member/dashboard']);
 
         } else {
@@ -83,7 +93,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       }, err => {
         console.log('Error', err);
         this.loading = false;
-        this.authError = true;
+        this.toastService.connectionFailed();
       });
     }
   }
@@ -95,5 +105,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.form.get('password').setValue('');
       this.submitted = false;
     }, 2000);
+  }
+
+  async handleNotifications() {
+    this.pushNotificationService.handleNotifications();
   }
 }

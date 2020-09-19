@@ -4,6 +4,9 @@ import {
   Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationsPlugin,
   PushNotificationToken
 } from '@capacitor/core';
+import {LoginService} from './login.service';
+import {StorageService} from './storage.service';
+import {User} from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,10 @@ export class PushNotificationService {
   pushNotifications: PushNotificationsPlugin;
   localNotification: LocalNotificationsPlugin;
 
-  constructor() {
+  constructor(
+      private loginService: LoginService,
+      private storageService: StorageService
+  ) {
     const {PushNotifications} = Plugins;
     const {LocalNotifications} = Plugins;
 
@@ -40,6 +46,12 @@ export class PushNotificationService {
     this.pushNotifications.addListener('registration',
         (token: PushNotificationToken) => {
           console.log('Registration success Firebase', token);
+          this.storageService.getUser().then((user: User) => {
+            this.loginService.updateFirebaseToken(user.id, token.value).subscribe(
+                res => console.log('update firebase token', res),
+                err => console.error('Error update firebase token')
+            );
+          });
         }
     );
 

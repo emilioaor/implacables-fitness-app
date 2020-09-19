@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {StorageService} from '../../services/storage.service';
 import {MemberService} from '../../services/member.service';
 import {User} from '../../interfaces/user.interface';
-import {ToastController} from '@ionic/angular';
+import {ToastService} from '../../services/toast.service';
 
 @Component({
   selector: 'app-member-classes',
@@ -24,7 +24,7 @@ export class MemberClassesComponent implements OnInit {
   constructor(
       private storageService: StorageService,
       private memberService: MemberService,
-      private toast: ToastController
+      private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -40,14 +40,14 @@ export class MemberClassesComponent implements OnInit {
         this.buildData(res.data);
       } else {
         this.classesGroup = [];
-        this.toastConnectionFailed();
+        this.toastService.connectionFailed();
       }
       this.loading = false;
     }, err => {
       console.log(err);
       this.classesGroup = [];
       this.loading = false;
-      this.toastConnectionFailed();
+      this.toastService.connectionFailed();
     });
   }
 
@@ -128,12 +128,12 @@ export class MemberClassesComponent implements OnInit {
         this.buildData(res.data);
       } else {
         this.classesGroup = [];
-        this.toastConnectionFailed();
+        this.toastService.connectionFailed();
       }
       event.target.complete();
     }, err => {
       this.classesGroup = [];
-      this.toastConnectionFailed();
+      this.toastService.connectionFailed();
       event.target.complete();
     });
   }
@@ -146,7 +146,7 @@ export class MemberClassesComponent implements OnInit {
 
       this.memberService.subscribeClass(classSelected.id, classSelected.date, this.user).subscribe((res: any) => {
         if (! res.success) {
-          this.toastConnectionFailed();
+          this.toastService.connectionFailed();
         }
         this.getClassToday();
       });
@@ -155,19 +155,10 @@ export class MemberClassesComponent implements OnInit {
       // Unsubscribe
       this.memberService.unsubscribeByDate(classSelected.date, this.user).subscribe((res: any) => {
         if (! res.success) {
-          this.toastConnectionFailed();
+          this.toastService.connectionFailed();
         }
         this.getClassToday();
       });
     }
-  }
-
-  async toastConnectionFailed() {
-    const toast = await this.toast.create({
-      message: 'Connection failed. Try again',
-      duration: 2000,
-      color: 'danger'
-    });
-    toast.present();
   }
 }

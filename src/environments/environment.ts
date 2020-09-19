@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://www.gym.local',
+  apiUrl: 'http://192.168.43.109',
   token: 'U1cxd2JHRmpZV0pzWlhOZlJtbDBibVZ6YzE5VWIydGxibDlsYldsc2FXOWhiM0pmYzJWamRYSnBkSGs9'
 };
 

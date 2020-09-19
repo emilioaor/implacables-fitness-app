@@ -15,4 +15,8 @@ export class LoginService {
   refreshLogin(userId) {
     return this.apiService.post('refresh_login', {user_id: userId});
   }
+
+  updateFirebaseToken(userId, firebaseToken) {
+    return this.apiService.post('update_firebase_token', {user_id: userId, firebase_token: firebaseToken});
+  }
 }

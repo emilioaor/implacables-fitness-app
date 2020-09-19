@@ -17,6 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ApiService} from './services/api.service';
 import {LoginService} from './services/login.service';
 import {StorageService} from './services/storage.service';
+import {ToastService} from './services/toast.service';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {StorageService} from './services/storage.service';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ApiService,
     LoginService,
-    StorageService
+    StorageService,
+    ToastService
   ],
   bootstrap: [AppComponent]
 })
