@@ -47,10 +47,12 @@ export class PushNotificationService {
         (token: PushNotificationToken) => {
           console.log('Registration success Firebase', token);
           this.storageService.getUser().then((user: User) => {
-            this.loginService.updateFirebaseToken(user.id, token.value).subscribe(
-                res => console.log('update firebase token', res),
-                err => console.error('Error update firebase token')
-            );
+            if (user) {
+              this.loginService.updateFirebaseToken(user.id, token.value).subscribe(
+                  res => console.log('update firebase token', res),
+                  err => console.error('Error update firebase token')
+              );
+            }
           });
         }
     );
@@ -65,18 +67,22 @@ export class PushNotificationService {
     // Show us the notification payload if the app is open on our device
     this.pushNotifications.addListener('pushNotificationReceived',
         async (notification: PushNotification) => {
-          const not = await this.localNotification.schedule({
-            notifications: [
-              {
-                title: notification.title,
-                body: notification.body,
-                id: 1,
-                sound: null,
-                attachments: null,
-                actionTypeId: '',
-                extra: null
-              }
-            ]
+          this.storageService.getUser().then(async (user: User) => {
+            if (user) {
+              const not = await this.localNotification.schedule({
+                notifications: [
+                  {
+                    title: notification.title,
+                    body: notification.body,
+                    id: 1,
+                    sound: null,
+                    attachments: null,
+                    actionTypeId: '',
+                    extra: null
+                  }
+                ]
+              });
+            }
           });
         }
     );
@@ -84,7 +90,7 @@ export class PushNotificationService {
     // Method called when tapping on a notification
     this.pushNotifications.addListener('pushNotificationActionPerformed',
         (notification: PushNotificationActionPerformed) => {
-          alert('Push action performed: ' + JSON.stringify(notification));
+          // alert('Push action performed: ' + JSON.stringify(notification));
         }
     );
   }
